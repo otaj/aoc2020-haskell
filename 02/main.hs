@@ -26,6 +26,7 @@ processAll :: String -> (Int -> Int -> Char -> String -> Bool) -> Int
 processAll d f = sum [1 | x <- lines d, processLine x f]
 
 
+main :: IO ()
 main = do
     content <- getContents
     print $ processAll content isValidPart1

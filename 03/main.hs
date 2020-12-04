@@ -1,3 +1,4 @@
+process :: Num p => Int -> Int -> Int -> Int -> [[Char]] -> p
 process right down startx starty content 
     | starty >= length content = 0
     | otherwise = process right down (startx + right) (starty + down) content + a
@@ -5,6 +6,7 @@ process right down startx starty content
               a = if v == '#' then 1 else 0
 
 
+main :: IO ()
 main = do
     content <- getContents
     print $ process 3 1 0 0 (lines content)
