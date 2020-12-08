@@ -8,8 +8,8 @@ splitBy :: (Foldable t, Eq a) => a -> t a -> [[a]]
 splitBy delimiter = foldr f [[]]
   where
     f c l@(x : xs)
-      | c == delimiter = [] : l
-      | otherwise = (c : x) : xs
+        | c == delimiter = [] : l
+        | otherwise = (c : x) : xs
 
 parseNums :: Foldable t => t Char -> [Int]
 parseNums str = map read (splitBy '-' str) :: [Int]
@@ -27,6 +27,6 @@ processAll d f = sum [1 | x <- lines d, processLine x f]
 
 main :: IO ()
 main = do
-  content <- getContents
-  print $ processAll content isValidPart1
-  print $ processAll content isValidPart2
+    content <- getContents
+    print $ processAll content isValidPart1
+    print $ processAll content isValidPart2

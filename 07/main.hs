@@ -6,13 +6,13 @@ parseRest (val : firstBag : secondBag : _ : rest) = (firstBag ++ " " ++ secondBa
 
 parseLine :: [[Char]] -> ([Char], [([Char], Int)])
 parseLine (firstBag : secondBag : "bags" : "contain" : rest)
-  | rest == ["no", "other", "bags."] = (firstBag ++ " " ++ secondBag, [])
-  | otherwise = (firstBag ++ " " ++ secondBag, parseRest rest)
+    | rest == ["no", "other", "bags."] = (firstBag ++ " " ++ secondBag, [])
+    | otherwise = (firstBag ++ " " ++ secondBag, parseRest rest)
 
 allInsides :: [([Char], Int)] -> [([Char], Int)] -> [([Char], [([Char], Int)])] -> [([Char], Int)]
 allInsides insides result bags
-  | null insides = result
-  | otherwise = allInsides extraInsides transInsides bags
+    | null insides = result
+    | otherwise = allInsides extraInsides transInsides bags
   where
     transInsides = M.toList $ M.fromListWith (+) (insides ++ result)
     extraInsides = M.toList $ M.fromListWith (+) ([(bagR, curAmount * amount) | (bag, curAmount) <- insides, (bagi, bInsides) <- bags, bag == bagi, (bagR, amount) <- bInsides])
@@ -25,6 +25,6 @@ processPart2 needle bags = sum [amount | (posNeedle, origInsides) <- bags, posNe
 
 main :: IO ()
 main = do
-  content <- getContents
-  print $ processPart1 "shiny gold" $ map (parseLine . words) (lines content)
-  print $ processPart2 "shiny gold" $ map (parseLine . words) (lines content)
+    content <- getContents
+    print $ processPart1 "shiny gold" $ map (parseLine . words) (lines content)
+    print $ processPart2 "shiny gold" $ map (parseLine . words) (lines content)

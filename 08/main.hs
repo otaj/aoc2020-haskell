@@ -5,8 +5,8 @@ if' False _ y = y
 replaceNth :: Int -> a -> [a] -> [a]
 replaceNth _ _ [] = []
 replaceNth n newVal (x : xs)
-  | n == 0 = newVal : xs
-  | otherwise = x : replaceNth (n -1) newVal xs
+    | n == 0 = newVal : xs
+    | otherwise = x : replaceNth (n - 1) newVal xs
 
 parseContent' :: [Char] -> (String, Int, Bool)
 parseContent' line = (instr, intAmount, False)
@@ -20,11 +20,11 @@ parseContent content = map parseContent' (lines content)
 
 runProgram' :: [([Char], Int, Bool)] -> Int -> Int -> (Int, Bool)
 runProgram' program acc index
-  | index == length program = (acc, True)
-  | instrMet = (acc, False)
-  | instr == "jmp" = runProgram' newProgram acc (index + amount)
-  | instr == "acc" = runProgram' newProgram (acc + amount) (index + 1)
-  | instr == "nop" = runProgram' newProgram acc (index + 1)
+    | index == length program = (acc, True)
+    | instrMet = (acc, False)
+    | instr == "jmp" = runProgram' newProgram acc (index + amount)
+    | instr == "acc" = runProgram' newProgram (acc + amount) (index + 1)
+    | instr == "nop" = runProgram' newProgram acc (index + 1)
   where
     (instr, amount, instrMet) = program !! index
     newProgram = replaceNth index (instr, amount, True) program
@@ -34,9 +34,9 @@ runProgram program = runProgram' program 0 0
 
 changingProgram' :: [([Char], Int, Bool)] -> Int -> Int
 changingProgram' program index
-  | instr == "acc" = changingProgram' program (index + 1)
-  | metFinish = result
-  | otherwise = changingProgram' program (index + 1)
+    | instr == "acc" = changingProgram' program (index + 1)
+    | metFinish = result
+    | otherwise = changingProgram' program (index + 1)
   where
     (instr, amount, _) = program !! index
     newInstr = if' (instr == "nop") "jmp" "nop"
@@ -48,6 +48,6 @@ changingProgram program = changingProgram' program 0
 
 main :: IO ()
 main = do
-  content <- getContents
-  print $ runProgram $ parseContent content
-  print $ changingProgram $ parseContent content
+    content <- getContents
+    print $ runProgram $ parseContent content
+    print $ changingProgram $ parseContent content
