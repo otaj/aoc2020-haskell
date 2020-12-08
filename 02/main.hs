@@ -5,29 +5,28 @@ isValidPart2 :: Eq a => Int -> Int -> a -> [a] -> Bool
 isValidPart2 pos1 pos2 l word = (word !! (pos1 - 1) == l) /= (word !! (pos2 - 1) == l)
 
 splitBy :: (Foldable t, Eq a) => a -> t a -> [[a]]
-splitBy delimiter = foldr f [[]] 
-            where f c l@(x:xs) | c == delimiter = []:l
-                               | otherwise = (c:x):xs
+splitBy delimiter = foldr f [[]]
+  where
+    f c l@(x : xs)
+      | c == delimiter = [] : l
+      | otherwise = (c : x) : xs
 
 parseNums :: Foldable t => t Char -> [Int]
-parseNums str = map read (splitBy '-' str ):: [Int]
-
+parseNums str = map read (splitBy '-' str) :: [Int]
 
 processLine :: [Char] -> (Int -> Int -> Char -> String -> t) -> t
-processLine line f = f minl maxl letter word 
-        where
-            nums:letters:rest = words line
-            minl:maxl:_ = parseNums nums
-            letter = head letters
-            word = head rest
-
+processLine line f = f minl maxl letter word
+  where
+    nums : letters : rest = words line
+    minl : maxl : _ = parseNums nums
+    letter = head letters
+    word = head rest
 
 processAll :: String -> (Int -> Int -> Char -> String -> Bool) -> Int
 processAll d f = sum [1 | x <- lines d, processLine x f]
 
-
 main :: IO ()
 main = do
-    content <- getContents
-    print $ processAll content isValidPart1
-    print $ processAll content isValidPart2
+  content <- getContents
+  print $ processAll content isValidPart1
+  print $ processAll content isValidPart2

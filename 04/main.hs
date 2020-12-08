@@ -21,7 +21,7 @@ splitBy delimiter = foldr f [[]]
       | c == delimiter = [] : l
       | otherwise = (c : x) : xs
 
-isNumeric:: [Char] -> Bool
+isNumeric :: [Char] -> Bool
 isNumeric = all (`elem` "0123456789")
 
 inBounds :: Ord a => a -> a -> a -> Bool
@@ -43,8 +43,9 @@ isValidHgt value
   where
     (amount, unit) = splitAt (length value - 2) value
     amountInt = read amount :: Int
-    isValidInUnit = case unit of "cm" -> inBounds 150 193 amountInt
-                                 "in" -> inBounds 59 76 amountInt
+    isValidInUnit = case unit of
+      "cm" -> inBounds 150 193 amountInt
+      "in" -> inBounds 59 76 amountInt
 
 isValidHcl :: [Char] -> Bool
 isValidHcl value@(start : rest)
