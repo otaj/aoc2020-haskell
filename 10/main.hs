@@ -27,9 +27,8 @@ main :: IO ()
 main = do
     contents <- getContents
     let numList = map read $ words contents :: [Int]
-    let sorted = 0 : sort numList
-    let sortedFull = sorted ++ [maximum sorted + 3]
-    let hist = buildHistDiff sortedFull
-    let hash = run sortedFull
+    let sorted = 0 : sort numList ++ [maximum numList + 3]
+    let hist = buildHistDiff sorted
+    let hash = run sorted
     print $ (hist ! 3) * (hist ! 1)
-    print $ hash ! last sortedFull
+    print $ hash ! last sorted
